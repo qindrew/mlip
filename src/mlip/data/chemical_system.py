@@ -19,7 +19,6 @@ import pydantic
 from typing_extensions import Self
 
 Positions: TypeAlias = np.ndarray  # [num_nodes, 3]
-Forces: TypeAlias = np.ndarray  # [num_nodes, 3]
 AtomicNumbers: TypeAlias = np.ndarray  # [num_nodes]
 AtomicSpecies: TypeAlias = np.ndarray  # [num_nodes, num_features]
 Cell: TypeAlias = np.ndarray  # [3, 3]
@@ -40,9 +39,7 @@ class ChemicalSystem(pydantic.BaseModel):
                         This array can be either one or two-dimensional, depending
                         on the number of features per atom.
         positions: The array of positions for the system in Angstrom.
-        energy: Optionally, a reference energy in eV.
-        forces: Optionally, reference forces in eV/Angstrom.
-        stress: Optionally, the stress in eV/Angstrom^3.
+        label: An integer representing if the frame was obtained from unbiased reactant/product, or biased simulation.
         cell: Optionally, a unit cell, which is an array of shape ``(3, 3)``.
         pbc: Optionally, periodic boundary conditions, which is a tuple of three
              booleans, one for each dimension whether the unit cell is periodic in
@@ -56,9 +53,7 @@ class ChemicalSystem(pydantic.BaseModel):
     atomic_numbers: AtomicNumbers
     atomic_species: AtomicSpecies
     positions: Positions  # Angstrom
-    energy: Optional[float] = None  # eV
-    forces: Optional[Forces] = None  # eV/Angstrom
-    stress: Optional[Stress] = None  # eV/Angstrom^3
+    label: Optional[float] = int  # frame label
     cell: Optional[Cell] = None
     pbc: Optional[tuple[bool, bool, bool]] = None
     weight: float = 1.0  # weight of config in loss
