@@ -20,10 +20,11 @@ Positions: TypeAlias = np.ndarray  # [num_nodes, 3]
 DisplacementVectors: TypeAlias = np.ndarray  # [num_edges, 3]
 ShiftVectors: TypeAlias = np.ndarray  # [num_edges, 3]
 AtomicSpecies: TypeAlias = np.ndarray  # [num_nodes]
-Forces: TypeAlias = np.ndarray  # [num_nodes, 3]
+# Forces: TypeAlias = np.ndarray  # [num_nodes, 3]
 Cell: TypeAlias = np.ndarray  # [num_graphs, 3, 3]
-Stress: TypeAlias = np.ndarray  # [num_graphs, 3, 3]
-Energy: TypeAlias = np.ndarray  # [num_graphs]
+# Stress: TypeAlias = np.ndarray  # [num_graphs, 3, 3]
+# Energy: TypeAlias = np.ndarray  # [num_graphs]
+Label: TypeAlias = np.ndarray # [num_graphs]
 WeightingFactors: TypeAlias = np.ndarray  # [num_graphs]
 
 
@@ -37,7 +38,7 @@ class GraphNodes(NamedTuple):
 
     positions: Positions
     species: AtomicSpecies
-    forces: Optional[Forces] = None
+    # forces: Optional[Forces] = None
 
 
 class GraphEdges(NamedTuple):
@@ -69,5 +70,6 @@ class GraphGlobals(NamedTuple):
 
     cell: Cell
     weight: WeightingFactors
-    energy: Optional[Energy] = None
-    stress: Optional[Stress] = None
+    label: Label
+    # energy: Optional[Energy] = None
+    # stress: Optional[Stress] = None
