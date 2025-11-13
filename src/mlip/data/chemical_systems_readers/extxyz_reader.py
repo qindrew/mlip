@@ -117,26 +117,28 @@ class ExtxyzReader(ChemicalSystemsReader):
         return [atoms_list]
 
     def _convert_atoms_to_chemical_system(self, atoms: ase.Atoms) -> ChemicalSystem:
-        energy = self._get_extxyz_property(atoms.get_potential_energy)  # eV
-        stress = self._get_extxyz_property(
-            atoms.get_stress, voigt=False
-        )  # eV / Ang^3, get stress as 3x3 matrix
+        # energy = self._get_extxyz_property(atoms.get_potential_energy)  # eV
+        # stress = self._get_extxyz_property(
+        #     atoms.get_stress, voigt=False
+        # )  # eV / Ang^3, get stress as 3x3 matrix
 
-        if energy is None:
-            energy = 0.0
+        # if energy is None:
+        #     energy = 0.0
 
-        if stress is not None:
-            stress = STRESS_PREFACTOR * stress
+        # if stress is not None:
+        #     stress = STRESS_PREFACTOR * stress
 
-            if REMAP_STRESS is not None:
-                remap_stress = np.asarray(REMAP_STRESS)
-                assert remap_stress.shape == (3, 3)
-                assert remap_stress.dtype.kind == "i"
-                stress = stress.flatten()[remap_stress]
+        #     if REMAP_STRESS is not None:
+        #         remap_stress = np.asarray(REMAP_STRESS)
+        #         assert remap_stress.shape == (3, 3)
+        #         assert remap_stress.dtype.kind == "i"
+        #         stress = stress.flatten()[remap_stress]
 
-            assert stress.shape == (3, 3)
+        #     assert stress.shape == (3, 3)
 
-        forces = self._get_extxyz_property(atoms.get_forces)  # eV / Ang
+        # forces = self._get_extxyz_property(atoms.get_forces)  # eV / Ang
+        label = atoms.info["label"]
+        
         atomic_numbers = np.array(
             [ase_atomic_numbers_map[symbol] for symbol in atoms.symbols]
         )
@@ -145,15 +147,13 @@ class ExtxyzReader(ChemicalSystemsReader):
         cell = np.array(atoms.get_cell())
         assert np.linalg.det(cell) >= 0.0
 
-        weight = DEFAULT_WEIGHT
+        weight = atoms.info["weight"]
 
         return ChemicalSystem(
             atomic_numbers=atomic_numbers,
             atomic_species=np.empty(atomic_numbers.shape[0]),  # will be populated later
             positions=atoms.get_positions(),
-            energy=energy,
-            forces=forces,
-            stress=stress,
+            label=label,
             cell=cell,
             pbc=pbc,
             weight=weight,
