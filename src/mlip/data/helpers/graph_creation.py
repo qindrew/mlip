@@ -51,12 +51,13 @@ def create_graph_from_chemical_system(
     )
 
     cell = np.zeros((3, 3)) if chemical_system.cell is None else chemical_system.cell
-    energy = np.array(0.0 if chemical_system.energy is None else chemical_system.energy)
+    # energy = np.array(0.0 if chemical_system.energy is None else chemical_system.energy)
+    label = np.array(chemical_system.label) #int
 
     graph = jraph.GraphsTuple(
         nodes=GraphNodes(
             positions=chemical_system.positions,
-            forces=chemical_system.forces,
+            # forces=chemical_system.forces,
             species=chemical_system.atomic_species,
         ),
         edges=GraphEdges(shifts=shift_vectors, displ_fun=None),
@@ -64,8 +65,9 @@ def create_graph_from_chemical_system(
             lambda x: x[None, ...],
             GraphGlobals(
                 cell=cell,
-                energy=energy,
-                stress=chemical_system.stress,
+                label=label,
+                # energy=energy,
+                # stress=chemical_system.stress,
                 weight=np.asarray(chemical_system.weight),
             ),
         ),
