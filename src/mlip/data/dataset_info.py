@@ -48,7 +48,7 @@ class DatasetInfo(pydantic.BaseModel):
                        values, the default being 1.0.
     """
 
-    atomic_energies_map: dict[int, float]
+    # atomic_energies_map: dict[int, float]
     cutoff_distance_angstrom: float
     avg_num_neighbors: float = 1.0
     avg_r_min_angstrom: Optional[float] = None
@@ -56,11 +56,11 @@ class DatasetInfo(pydantic.BaseModel):
     scaling_stdev: float = 1.0
 
     def __str__(self):
-        atomic_energies_map_with_symbols = {
-            Atom(num).symbol: value for num, value in self.atomic_energies_map.items()
-        }
+        # atomic_energies_map_with_symbols = {
+        #     Atom(num).symbol: value for num, value in self.atomic_energies_map.items()
+        # }
         return (
-            f"Atomic Energies: {atomic_energies_map_with_symbols}, "
+            # f"Atomic Energies: {atomic_energies_map_with_symbols}, "
             f"Avg. num. neighbors: {self.avg_num_neighbors:.2f}, "
             f"Avg. r_min: {self.avg_r_min_angstrom:.2f}, "
             f"Graph cutoff distance: {self.cutoff_distance_angstrom}"
@@ -104,10 +104,10 @@ def compute_dataset_info_from_graphs(
         avg_r_min_angstrom = compute_avg_min_neighbor_distance(graphs)
         logger.debug("Average min. node distance (Angstrom): %.1f", avg_r_min_angstrom)
 
-    atomic_energies_map = {
-        z_table.index_to_z(idx): energy
-        for idx, energy in compute_average_e0s_from_graphs(graphs).items()
-    }
+    # atomic_energies_map = {
+    #     z_table.index_to_z(idx): energy
+    #     for idx, energy in compute_average_e0s_from_graphs(graphs).items()
+    # }
 
     logger.debug(
         "Computation of average atomic energies"
@@ -116,7 +116,7 @@ def compute_dataset_info_from_graphs(
     )
 
     return DatasetInfo(
-        atomic_energies_map=atomic_energies_map,
+        # atomic_energies_map=atomic_energies_map,
         cutoff_distance_angstrom=cutoff_distance_angstrom,
         avg_num_neighbors=avg_num_neighbors,
         avg_r_min_angstrom=avg_r_min_angstrom,
