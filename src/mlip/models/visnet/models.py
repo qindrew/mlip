@@ -108,11 +108,11 @@ class Visnet(MLIPNetwork):
 
         node_feats += self.dataset_info.scaling_mean
 
-        atomic_energies_ = get_atomic_energies(
-            self.dataset_info, self.config.atomic_energies, num_species
-        )
-        atomic_energies_ = jnp.asarray(atomic_energies_)
-        node_feats += atomic_energies_[node_species]  # [n_nodes, ]
+        # atomic_energies_ = get_atomic_energies(
+        #     self.dataset_info, self.config.atomic_energies, num_species
+        # )
+        # atomic_energies_ = jnp.asarray(atomic_energies_)
+        # node_feats += atomic_energies_[node_species]  # [n_nodes, ]
 
         return node_feats
 
