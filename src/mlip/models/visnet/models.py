@@ -74,8 +74,8 @@ class Visnet(MLIPNetwork):
         r_max = self.dataset_info.cutoff_distance_angstrom
 
         num_species = self.config.num_species
-        if num_species is None:
-            num_species = len(self.dataset_info.atomic_energies_map)
+        # if num_species is None:
+        #     num_species = len(self.dataset_info.atomic_energies_map)
 
         visnet_kwargs = dict(
             lmax=self.config.l_max,
