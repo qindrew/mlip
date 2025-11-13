@@ -62,4 +62,4 @@ class VisnetConfig(pydantic.BaseModel):
     attn_activation: Activation = Activation.SILU
     vecnorm_type: VecNormType = VecNormType.NONE
     atomic_energies: Optional[Union[str, dict[int, float]]] = None
-    num_species: Optional[PositiveInt] = None
+    num_species: PositiveInt = None
